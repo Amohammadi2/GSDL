@@ -1,0 +1,7 @@
+type Query {
+    myField: GenType<GenType<Int>>
+}
+
+generic type GenType <Type> {
+    innerField: Type!
+}

@@ -1,0 +1,8 @@
+interface Person {
+    firstName: String!
+    lastName: String!
+}
+
+type Programmer implements Person {
+    favoriteLanguages: [ProgLang]!
+}

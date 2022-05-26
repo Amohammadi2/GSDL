@@ -1,0 +1,25 @@
+type Query {
+	feed: Connection<Post>
+	posts: Connection<Post>
+}
+
+generic type Connection <EdgeType> {
+	pageInfo: PageInfo!
+	edges: [Edge<EdgeType>]!
+}
+
+generic type Edge <NodeType> {
+	cursor: String!
+	node: NodeType!
+}
+
+interface Node {
+	uid: String!
+}
+
+type Post implements Node {
+	title: String!
+	summery: String!
+	content: String!
+    author: String!
+}
