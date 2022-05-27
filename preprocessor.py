@@ -13,7 +13,7 @@ class GSDLPreprocessor:
         node_type, definitions = parse_tree
         parsed_definitions = (node_type, self.definitions_visitor(definitions))
         generated_definitions = self.generate_types()
-        return (node_type, (*parsed_definitions, *generated_definitions))
+        return (*parsed_definitions, *generated_definitions)
 
     def generate_types(self):
         generated_definitions = set()
