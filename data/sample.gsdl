@@ -23,3 +23,13 @@ type Post implements Node {
 	content: String!
     author: String!
 }
+
+enum UserRole {
+	ADMIN
+	STUDENT
+	TEACHER
+}
+
+type User {
+	role: UserRole
+}

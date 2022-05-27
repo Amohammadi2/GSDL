@@ -23,6 +23,7 @@ if __name__ == '__main__':
         parser = GSDLParser()
         preprocessor = GSDLPreprocessor()
         transpiler = GSDLTranspiler()
+        breakpoint()
         parse_tree = parser.parse(lexer.tokenize(gsdl_schema))
         processed_parse_tree = preprocessor.preprocess(parse_tree)
         schema_output = transpiler.transpile(processed_parse_tree)

@@ -58,13 +58,15 @@ class GSDLPreprocessor:
     def definition_visitor(self, definition):
         def_type = definition[0]
 
-        if def_type == 'type_def':
-            name, field_set, interface = definition[1::]
-            return (def_type, name, self.field_set_visitor(field_set), interface)
-
-        elif def_type == 'interface_def':
-            name, field_set = definition[1::]
-            return (def_type, name, self.field_set_visitor(field_set))
+        match def_type:
+            case 'type_def':
+                name, field_set, interface = definition[1::]
+                return (def_type, name, self.field_set_visitor(field_set), interface)
+            case 'interface_def':
+                name, field_set = definition[1::]
+                return (def_type, name, self.field_set_visitor(field_set))
+            case 'enum_def':
+                return definition
 
     def field_set_visitor(self, field_set):
         node_type, fields = field_set

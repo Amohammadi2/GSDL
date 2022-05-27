@@ -10,8 +10,14 @@ interface %s {
 }
 """
 
-FIELD_TEMPLATE = """    %s: %s"""
+ENUM_DEF_TEMPLATE = """
+enum %s {
+%s
+}
+"""
 
+FIELD_TEMPLATE = """    %s: %s"""
+ENUM_FIELD_TEMPLATE = """   %s"""
 
 class GSDLTranspiler:
     """ Turns the parse tree into GraphQL SDL format """
@@ -23,6 +29,7 @@ class GSDLTranspiler:
             match definition[0]:
                 case "type_def": return self.transpile_type_def(definition)
                 case "interface_def": return self.transpile_interface_def(definition)
+                case "enum_def": return self.transpile_enum_def(definition)
 
         return "".join(map(handle_definitions, definitions))
 
@@ -42,6 +49,14 @@ class GSDLTranspiler:
             name,
             self.transpile_field_set(field_set)
         )
+
+    def transpile_enum_def(self, enum_def):
+        _, name, id_set = enum_def
+        return ENUM_DEF_TEMPLATE % (name, self.transpile_enum_id_set(id_set))
+
+    def transpile_enum_id_set(self, id_set):
+        _, ids = id_set
+        return "\n".join(ENUM_FIELD_TEMPLATE % (id) for id in ids)
 
 
     def transpile_field_set(self, field_set):
