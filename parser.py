@@ -86,8 +86,8 @@ class GSDLParser(Parser):
     def generic_type(self, p):
         return ('generic_type', p.ID, p.type_args)
 
-    @_('type', 'type_args type')
+    @_('ID', 'type_args ID')
     def type_args(self, p):
         if hasattr(p, 'type_args'):
-            return ('type_args', (*p.type_args[1], p.type))
-        return ('type_args', (p.type,))
+            return ('type_args', (*p.type_args[1], ('type', p.ID)))
+        return ('type_args', (('type', p.ID),))

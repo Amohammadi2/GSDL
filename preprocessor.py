@@ -97,13 +97,11 @@ class GSDLPreprocessor:
     def handle_generic_type_name(self, field_type):
         type = field_type[0]
 
-        match type:
-            case "type": return field_type[1]
-            case "required_type": return f"{self.handle_generic_type_name(field_type[1])}!"
-            case "array_type": return f"{self.handle_generic_type_name(field_type[1])}Arr"
-            case "generic_type":
-                type_name, type_args = field_type[1::]
-                name_list = []
-                for type_arg in type_args[1]:
-                    name_list.append(self.handle_generic_type_name(type_arg))
-                return f"{'_'.join(name_list)}__{type_name}"
+        if type == "generic_type":
+            type_name, type_args = field_type[1::]
+            name_list = []
+            for type_arg in type_args[1]:
+                name_list.append(self.handle_generic_type_name(type_arg))
+            return f"{'_'.join(name_list)}{type_name}"
+
+        return field_type[1]
